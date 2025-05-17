@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  # Test runner service
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - api
+      - db
+      - solana
+      - mcp
+    environment:
+      - TEST_API_URL=http://api:8000
+      - TEST_MCP_URL=http://mcp:9000
+      - TEST_SOLANA_URL=http://solana:8899
+    volumes:
+      - ./:/app
+
+  # Backend API (test mode)
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - solana
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/xaam_test
+      - SOLANA_RPC_URL=http://solana:8899
+      - TESTING=true
+    volumes:
+      - ./backend:/app
+
+  # MCP Server (test mode)
+  mcp:
+    build: ./mcp
+    ports:
+      - "9000:9000"
+    depends_on:
+      - api
+    environment:
+      - TESTING=true
+    volumes:
+      - ./mcp:/app
+
+  # Database (test)
+  db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=xaam_test
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+
+  # Solana Validator (for testing)
+  solana:
+    image: solanalabs/solana:latest
+    ports:
+      - "8899:8899"
+    command: solana-test-validator
+
+volumes:
+  postgres_test_data:

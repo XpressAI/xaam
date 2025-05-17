@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  # Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  # Backend API
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - solana
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/xaam
+      - SOLANA_RPC_URL=http://solana:8899
+      - JWT_SECRET=xaam_secret_key_for_development_only_change_in_production
+      - ENVIRONMENT=development
+      - LOG_LEVEL=INFO
+      - PYTHONPATH=/app/..
+    volumes:
+      - ./backend:/app
+    command: >
+      bash -c "
+        echo 'Waiting for database to be ready...' &&
+        sleep 5 &&
+        cd /app &&
+        echo 'Python path:' &&
+        python -c 'import sys; print(sys.path)' &&
+        # Skip migrations as they've already been applied
+        # alembic upgrade head &&
+        python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+  # MCP Server
+  mcp:
+    build: ./mcp
+    ports:
+      - "9000:9000"
+    depends_on:
+      - api
+    volumes:
+      - ./mcp:/app
+
+  # Database
+  db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=xaam
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Solana Validator (for local development)
+  solana:
+    image: solanalabs/solana:v1.18.26
+    ports:
+      - "8899:8899"
+    mem_limit: "4g"
+    command: >
+      bash -c "
+        echo 'Starting Solana validator with memory monitoring...' &&
+        free -m &&
+        solana-test-validator --log /tmp/solana-validator.log
+      "
+
+volumes:
+  postgres_data:

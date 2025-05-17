@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  unittest:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.unittest
+    volumes:
+      - ./backend:/app/backend
+    environment:
+      - PYTHONPATH=/app
+      - TESTING=true
