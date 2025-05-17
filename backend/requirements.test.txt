@@ -1,0 +1,19 @@
+fastapi==0.104.1
+uvicorn==0.23.2
+pydantic==2.4.2
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+alembic==1.12.1
+python-jose==3.3.0
+passlib==1.7.4
+python-multipart==0.0.6
+pycryptodome==3.19.0
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+aiosqlite==0.19.0
+httpx==0.23.3  # Downgraded to be compatible with solana
+websockets==11.0  # Downgraded to be compatible with solana
+solana==0.30.2
+asyncpg==0.28.0
+python-dotenv==1.0.0

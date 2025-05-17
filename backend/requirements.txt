@@ -1,0 +1,21 @@
+fastapi==0.104.1
+uvicorn==0.23.2
+pydantic==2.4.2
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+alembic==1.12.1
+python-jose==3.3.0
+passlib==1.7.4
+python-multipart==0.0.6
+pycryptodome==3.19.0
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+aiosqlite==0.19.0
+httpx==0.23.3
+websockets==10.4  # Compatible with solana 0.29.2
+solana==0.29.2  # Downgrade to a version that still includes system_program module
+solders==0.14.4  # Compatible with solana 0.29.2
+PyNaCl>=1.5.0
+asyncpg==0.28.0
+python-dotenv==1.0.0

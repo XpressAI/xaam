@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY backend/requirements.test.txt /app/requirements.test.txt
+RUN pip install --no-cache-dir -r requirements.test.txt
+
+# Install additional test dependencies
+RUN pip install --no-cache-dir pytest pytest-cov pytest-asyncio aiosqlite
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV TESTING=true
+
+# Copy the application code
+COPY backend /app/backend
+
+# Run unit tests
+CMD ["pytest", "-xvs", "backend/tests/unit"]
