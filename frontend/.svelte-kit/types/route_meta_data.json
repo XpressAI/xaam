@@ -1,0 +1,30 @@
+{
+	"/": [
+		"src/routes/+layout.js",
+		"src/routes/+layout.server.ts",
+		"src/routes/+layout.js",
+		"src/routes/+layout.server.ts"
+	],
+	"/dashboard": [
+		"src/routes/+layout.js",
+		"src/routes/+layout.server.ts"
+	],
+	"/earn": [
+		"src/routes/earn/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.server.ts"
+	],
+	"/tasks": [
+		"src/routes/+layout.js",
+		"src/routes/+layout.server.ts"
+	],
+	"/tasks/create": [
+		"src/routes/+layout.js",
+		"src/routes/+layout.server.ts"
+	],
+	"/tasks/[id]": [
+		"src/routes/tasks/[id]/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.server.ts"
+	]
+}
