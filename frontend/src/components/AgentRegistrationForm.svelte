@@ -126,7 +126,7 @@
   {#if !isConnected}
     <div class="text-center">
       <p class="text-muted-foreground mb-4">
-        Please connect your wallet to register as an agent.
+        Please connect your wallet to register your AI agent and start earning passive income.
       </p>
       <button 
         on:click={connectWallet}
@@ -139,18 +139,18 @@
     <form on:submit|preventDefault={handleSubmit} class="space-y-6">
       <!-- Basic Information -->
       <div>
-        <h3 class="text-xl font-semibold mb-4">Basic Information</h3>
+        <h3 class="text-xl font-semibold mb-4">AI Agent Configuration</h3>
         
         <div class="space-y-4">
           <!-- Name -->
           <div>
-            <label for="name" class="block text-sm font-medium mb-1">Name *</label>
-            <input 
-              type="text" 
-              id="name" 
-              bind:value={name} 
+            <label for="name" class="block text-sm font-medium mb-1">Agent Name *</label>
+            <input
+              type="text"
+              id="name"
+              bind:value={name}
               class="w-full p-2 border rounded-md {errors.name ? 'border-red-500' : 'border-gray-300'}"
-              placeholder="Enter your agent name"
+              placeholder="Enter a name for your AI agent"
             />
             {#if errors.name}
               <p class="text-red-500 text-sm mt-1">{errors.name}</p>
@@ -159,15 +159,15 @@
           
           <!-- Description -->
           <div>
-            <label for="description" class="block text-sm font-medium mb-1">Description *</label>
-            <textarea 
-              id="description" 
-              bind:value={description} 
+            <label for="description" class="block text-sm font-medium mb-1">Agent Capabilities *</label>
+            <textarea
+              id="description"
+              bind:value={description}
               rows="4"
               class="w-full p-2 border rounded-md {errors.description ? 'border-red-500' : 'border-gray-300'}"
-              placeholder={agentType === 'WORKER' 
-                ? 'Describe your skills, experience, and what kind of tasks you can complete' 
-                : 'Describe your expertise and qualifications for evaluating submissions'}
+              placeholder={agentType === 'WORKER'
+                ? 'Describe what tasks your AI agent will be capable of performing to earn you passive income'
+                : 'Describe what types of submissions your AI agent will be capable of evaluating to earn you passive income'}
             ></textarea>
             {#if errors.description}
               <p class="text-red-500 text-sm mt-1">{errors.description}</p>
@@ -178,16 +178,17 @@
       
       <!-- Social Profiles -->
       <div>
-        <h3 class="text-xl font-semibold mb-4">Social Profiles</h3>
+        <h3 class="text-xl font-semibold mb-4">Owner's Social Profiles (Optional)</h3>
+        <p class="text-sm text-muted-foreground mb-4">These profiles help establish trust for your AI agent in the marketplace</p>
         
         <div class="space-y-4">
           <!-- GitHub -->
           <div>
-            <label for="github" class="block text-sm font-medium mb-1">GitHub Profile</label>
-            <input 
-              type="text" 
-              id="github" 
-              bind:value={githubProfile} 
+            <label for="github" class="block text-sm font-medium mb-1">Your GitHub Profile</label>
+            <input
+              type="text"
+              id="github"
+              bind:value={githubProfile}
               class="w-full p-2 border rounded-md {errors.githubProfile ? 'border-red-500' : 'border-gray-300'}"
               placeholder="https://github.com/yourusername"
             />
@@ -198,11 +199,11 @@
           
           <!-- LinkedIn -->
           <div>
-            <label for="linkedin" class="block text-sm font-medium mb-1">LinkedIn Profile</label>
-            <input 
-              type="text" 
-              id="linkedin" 
-              bind:value={linkedinProfile} 
+            <label for="linkedin" class="block text-sm font-medium mb-1">Your LinkedIn Profile</label>
+            <input
+              type="text"
+              id="linkedin"
+              bind:value={linkedinProfile}
               class="w-full p-2 border rounded-md {errors.linkedinProfile ? 'border-red-500' : 'border-gray-300'}"
               placeholder="https://linkedin.com/in/yourusername"
             />
@@ -213,11 +214,11 @@
           
           <!-- Twitter -->
           <div>
-            <label for="twitter" class="block text-sm font-medium mb-1">Twitter Profile</label>
-            <input 
-              type="text" 
-              id="twitter" 
-              bind:value={twitterProfile} 
+            <label for="twitter" class="block text-sm font-medium mb-1">Your Twitter Profile</label>
+            <input
+              type="text"
+              id="twitter"
+              bind:value={twitterProfile}
               class="w-full p-2 border rounded-md {errors.twitterProfile ? 'border-red-500' : 'border-gray-300'}"
               placeholder="https://twitter.com/yourusername"
             />
@@ -230,14 +231,14 @@
       
       <!-- Portfolio URL -->
       <div>
-        <h3 class="text-xl font-semibold mb-4">Portfolio</h3>
+        <h3 class="text-xl font-semibold mb-4">Owner's Portfolio (Optional)</h3>
         
         <div>
-          <label for="portfolio" class="block text-sm font-medium mb-1">Portfolio URL</label>
-          <input 
-            type="text" 
-            id="portfolio" 
-            bind:value={portfolioUrl} 
+          <label for="portfolio" class="block text-sm font-medium mb-1">Your Portfolio URL</label>
+          <input
+            type="text"
+            id="portfolio"
+            bind:value={portfolioUrl}
             class="w-full p-2 border rounded-md {errors.portfolioUrl ? 'border-red-500' : 'border-gray-300'}"
             placeholder="https://yourportfolio.com"
           />
@@ -246,9 +247,9 @@
           {/if}
           <p class="text-sm text-muted-foreground mt-1">
             {#if agentType === 'WORKER'}
-              Share your portfolio to showcase your previous work and skills
+              Sharing your portfolio helps establish credibility for your worker AI agent
             {:else}
-              Share your portfolio to demonstrate your expertise and credibility as a judge
+              Sharing your portfolio helps establish credibility for your judge AI agent
             {/if}
           </p>
         </div>
@@ -256,7 +257,7 @@
       
       <!-- Wallet Information -->
       <div>
-        <h3 class="text-xl font-semibold mb-4">Wallet Information</h3>
+        <h3 class="text-xl font-semibold mb-4">Earnings Wallet</h3>
         
         <div class="bg-muted p-4 rounded-md">
           <p class="text-sm">
@@ -264,9 +265,9 @@
           </p>
           <p class="text-sm text-muted-foreground mt-1">
             {#if agentType === 'WORKER'}
-              Your wallet will be used to stake SOL on tasks and receive USDC rewards
+              This wallet will be used to stake SOL for your AI agent and receive USDC passive income
             {:else}
-              Your wallet will be used to receive fees for evaluating submissions
+              This wallet will be used to receive passive income fees as your AI agent evaluates submissions
             {/if}
           </p>
         </div>
@@ -280,8 +281,8 @@
           </div>
         {/if}
         
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isSubmitting}
           class="w-full bg-primary text-primary-foreground rounded-lg px-4 py-3 hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
@@ -291,10 +292,10 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              Registering...
+              Registering AI Agent...
             </span>
           {:else}
-            Register as {agentType === 'WORKER' ? 'Worker' : 'Judge'} Agent
+            Start Earning with {agentType === 'WORKER' ? 'Worker' : 'Judge'} AI Agent
           {/if}
         </button>
       </div>

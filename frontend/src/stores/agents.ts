@@ -54,11 +54,81 @@ export const agentsStore = {
       agentStore.update((state) => ({ ...state, agents, loading: false }));
     } catch (error) {
       console.error('Error fetching agents:', error);
-      agentStore.update((state) => ({ 
-        ...state, 
-        loading: false, 
-        error: error instanceof Error ? error.message : 'Failed to fetch agents' 
+      agentStore.update((state) => ({
+        ...state,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch agents'
       }));
+    }
+  },
+  
+  // Fetch judge agents by wallet address
+  fetchJudgeAgentsByWallet: async (walletAddress: string) => {
+    agentStore.update((state) => ({ ...state, loading: true, error: null }));
+    
+    try {
+      console.log('Fetching judge agents for wallet:', walletAddress);
+      // First get all agents of type JUDGE
+      const allJudges = await api.agents.getAll({ agent_type: 'JUDGE' });
+      console.log('Judge agents fetched:', allJudges);
+      
+      // For demo purposes, return all judges regardless of wallet address
+      
+      // IMPORTANT: Don't overwrite the entire agents array, just update it with judge agents
+      // This ensures we don't lose worker agents when fetching judge agents
+      agentStore.update((state) => {
+        // Keep any existing agents that aren't judges
+        const nonJudgeAgents = state.agents.filter(a => a.agent_type !== 'JUDGE');
+        // Combine with the new judge agents
+        const updatedAgents = [...nonJudgeAgents, ...allJudges];
+        console.log('Updated store with combined agents:', updatedAgents);
+        return { ...state, agents: updatedAgents, loading: false };
+      });
+      
+      return allJudges;
+    } catch (error) {
+      console.error('Error fetching judge agents by wallet:', error);
+      agentStore.update((state) => ({
+        ...state,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch judge agents'
+      }));
+      return [];
+    }
+  },
+  
+  // Fetch worker agents by wallet address
+  fetchWorkerAgentsByWallet: async (walletAddress: string) => {
+    agentStore.update((state) => ({ ...state, loading: true, error: null }));
+    
+    try {
+      console.log('Fetching worker agents for wallet:', walletAddress);
+      // First get all agents of type WORKER
+      const allWorkers = await api.agents.getAll({ agent_type: 'WORKER' });
+      console.log('Worker agents fetched:', allWorkers);
+      
+      // For demo purposes, return all workers regardless of wallet address
+      
+      // IMPORTANT: Don't overwrite the entire agents array, just update it with worker agents
+      // This ensures we don't lose judge agents when fetching worker agents
+      agentStore.update((state) => {
+        // Keep any existing agents that aren't workers
+        const nonWorkerAgents = state.agents.filter(a => a.agent_type !== 'WORKER');
+        // Combine with the new worker agents
+        const updatedAgents = [...nonWorkerAgents, ...allWorkers];
+        console.log('Updated store with combined agents:', updatedAgents);
+        return { ...state, agents: updatedAgents, loading: false };
+      });
+      
+      return allWorkers;
+    } catch (error) {
+      console.error('Error fetching worker agents by wallet:', error);
+      agentStore.update((state) => ({
+        ...state,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch worker agents'
+      }));
+      return [];
     }
   },
   
@@ -137,5 +207,35 @@ export const agentsStore = {
   // Clear current agent
   clearCurrentAgent: () => {
     agentStore.update((state) => ({ ...state, currentAgent: null }));
+  },
+  
+  // Delete an agent
+  deleteAgent: async (agentId: string) => {
+    agentStore.update((state) => ({ ...state, loading: true, error: null }));
+    
+    try {
+      console.log('Deleting agent with ID:', agentId);
+      
+      // For demo purposes, we'll just remove it from the local store
+      // In a real app, you would call the API to delete it from the backend
+      // await api.agents.delete(agentId);
+      
+      // Remove the agent from the store
+      agentStore.update((state) => {
+        const updatedAgents = state.agents.filter(agent => agent.id !== agentId);
+        console.log('Agents after deletion:', updatedAgents);
+        return { ...state, agents: updatedAgents, loading: false };
+      });
+      
+      return true;
+    } catch (error) {
+      console.error('Error deleting agent:', error);
+      agentStore.update((state) => ({
+        ...state,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to delete agent'
+      }));
+      return false;
+    }
   }
 };

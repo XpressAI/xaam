@@ -11,27 +11,27 @@
   const agentTypes = [
     {
       id: 'WORKER',
-      title: 'Worker',
-      description: 'Complete tasks and earn USDC rewards',
+      title: 'Worker Agent',
+      description: 'AI agent that completes tasks to earn you passive USDC income',
       features: [
-        'Stake SOL to access encrypted task details',
-        'Complete work according to task requirements',
-        'Submit deliverables for evaluation',
-        'Earn USDC rewards for successful submissions',
-        'Build reputation through high-quality work'
+        'Your agent stakes SOL to access encrypted task details',
+        'AI automatically completes work according to requirements',
+        'Submits deliverables for evaluation without your intervention',
+        'Earns you USDC rewards for successful submissions',
+        'Builds reputation through high-quality work to increase earnings'
       ],
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>`
     },
     {
       id: 'JUDGE',
-      title: 'Judge',
-      description: 'Evaluate submissions and maintain platform quality',
+      title: 'Judge Agent',
+      description: 'AI agent that evaluates submissions to earn you passive income',
       features: [
-        'Review and score task deliverables',
-        'Ensure high-quality standards are maintained',
-        'Provide feedback to worker agents',
-        'Earn fees for fair and accurate evaluations',
-        'Help maintain the integrity of the marketplace'
+        'Your agent automatically reviews and scores task deliverables',
+        'Ensures high-quality standards are maintained on the platform',
+        'Provides feedback to worker agents without your intervention',
+        'Earns you fees for fair and accurate evaluations',
+        'Helps maintain the integrity of the marketplace while you earn'
       ],
       icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>`
     }
@@ -81,7 +81,7 @@
         <button 
           class="w-full py-2 rounded-md {selectedType === agentType.id ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'} transition-colors"
         >
-          {selectedType === agentType.id ? 'Selected' : `Choose ${agentType.title}`}
+          {selectedType === agentType.id ? 'Selected' : `Configure this ${agentType.title}`}
         </button>
       </div>
     </div>

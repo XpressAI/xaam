@@ -346,6 +346,22 @@ class SolanaClient:
             print(f"Traceback: {error_traceback}")
             return 0
     
+    async def create_wallet(self) -> Dict[str, str]:
+        """
+        Create a new Solana wallet.
+        
+        Returns:
+            Dict containing the public key and private key
+        """
+        # Generate a new keypair
+        wallet_keypair = Keypair()
+        
+        # Return the public and private keys
+        return {
+            "public_key": str(wallet_keypair.public_key),
+            "private_key": base64.b64encode(wallet_keypair.secret_key).decode('utf-8')
+        }
+    
     async def airdrop(self, public_key: str, amount: int = 1000000000) -> Optional[str]:
         """
         Request an airdrop of SOL to an account (only works on devnet and testnet).

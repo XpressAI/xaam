@@ -46,7 +46,7 @@ async def health_check():
     return {"status": "healthy"}
 
 # Include routers
-from app.api.routes import tasks, agents, judges, blockchain, encryption, deliverables
+from app.api.routes import tasks, agents, judges, blockchain, encryption, deliverables, wallets
 
 app.include_router(tasks.router, prefix="/api/tasks", tags=["Tasks"])
 app.include_router(agents.router, prefix="/api/agents", tags=["Agents"])
@@ -54,6 +54,7 @@ app.include_router(judges.router, prefix="/api/judges", tags=["Judges"])
 app.include_router(blockchain.router, prefix="/api/blockchain", tags=["Blockchain"])
 app.include_router(encryption.router, prefix="/api/encryption", tags=["Encryption"])
 app.include_router(deliverables.router, prefix="/api/deliverables", tags=["Deliverables"])
+app.include_router(wallets.router, prefix="/api/wallets", tags=["Wallets"])
 
 # Protocol compliance check
 def check_protocol_compliance():
